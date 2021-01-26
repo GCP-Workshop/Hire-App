@@ -6,7 +6,6 @@ import com.google.cloud.functions.HttpResponse;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
 
 import java.io.BufferedWriter;
 import java.net.HttpURLConnection;
@@ -19,7 +18,7 @@ public class MainFunction implements HttpFunction {
     @Override
     public void service(HttpRequest request, HttpResponse response) throws Exception {
         String name = null;
-        Integer age = 0;
+        Integer age = null;
         String place = null;
         String phone = null;
         JsonObject requestJson = null;
