@@ -30,13 +30,13 @@ public class MainFunction implements HttpFunction {
                 requestJson = requestParsed.getAsJsonObject();
             }
 
-            if (requestJson != null && requestJson.has("name") && requestJson.has("age") && requestJson.has("place") && requestJson.has("phone")) {
+            if (requestJson != null || !requestJson.has("name") || !requestJson.has("age") || !requestJson.has("place") ||
+                    !requestJson.has("phone")) {
                 name = requestJson.get("name").getAsString();
                 age = requestJson.get("age").getAsInt();
                 place = requestJson.get("place").getAsString();
                 phone = requestJson.get("phone").getAsString();
-            }
-            if (requestJson == null || name == null || age == null || place == null || phone == null) {
+            } else {
                 response.setStatusCode(HttpURLConnection.HTTP_BAD_REQUEST);
                 return;
             }
