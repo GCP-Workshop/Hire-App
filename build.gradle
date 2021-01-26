@@ -26,7 +26,7 @@ tasks.register("runFunction", JavaExec) {
     classpath(configurations.invoker)
     inputs.files(configurations.runtimeClasspath, sourceSets.main.output)
     args(
-            '--target', project.findProperty('run.functionTarget') ?: 'functions.HelloWorld',
+            '--target', project.findProperty('run.functionTarget') ?: 'functions.MainFunction',
             '--port', project.findProperty('run.port') ?: 8080
     )
     doFirst {
