@@ -1,0 +1,1 @@
+gcloud functions deploy my-first-function --entry-point functions.MainFunction --runtime java11 --trigger-http --memory 512MB --allow-unauthenticated
