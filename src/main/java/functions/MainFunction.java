@@ -13,16 +13,15 @@ import java.net.HttpURLConnection;
 import java.util.logging.Logger;
 
 public class MainFunction implements HttpFunction {
-    private String NOINPUT = "no-input";
     private static final Gson gson = new Gson();
     private static final Logger logger = Logger.getLogger(MainFunction.class.getName());
 
     @Override
     public void service(HttpRequest request, HttpResponse response) throws Exception {
-        String name = NOINPUT;
-        int age = 0;
-        String place = NOINPUT;
-        String phone = NOINPUT;
+        String name = null;
+        Integer age = 0;
+        String place = null;
+        String phone = null;
         JsonObject requestJson = null;
         try {
             JsonElement requestParsed = gson.fromJson(request.getReader(), JsonElement.class);
@@ -37,17 +36,20 @@ public class MainFunction implements HttpFunction {
                 place = requestJson.get("place").getAsString();
                 phone = requestJson.get("phone").getAsString();
             }
+            if (requestJson == null || name == null || age == null || place == null || phone == null) {
+                response.setStatusCode(HttpURLConnection.HTTP_BAD_REQUEST);
+                return;
+            }
 
-        } catch (JsonParseException e) {
-            logger.severe("Error parsing JSON: " + e.getMessage());
-
-        }
-        if (requestJson == null) {
+        } catch (Exception e) {
+            logger.severe("Error input: " + e.getMessage());
             response.setStatusCode(HttpURLConnection.HTTP_BAD_REQUEST);
             return;
         }
 
         BufferedWriter writer = response.getWriter();
-        writer.write("Successfully Hired");
+        writer.write("{\"status\":\"success\"}");
     }
+
+
 }
