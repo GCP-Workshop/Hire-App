@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
 import java.io.BufferedWriter;
+import java.net.HttpURLConnection;
 import java.util.logging.Logger;
 
 public class MainFunction implements HttpFunction {
@@ -22,9 +23,9 @@ public class MainFunction implements HttpFunction {
         int age = 0;
         String place = NOINPUT;
         String phone = NOINPUT;
+        JsonObject requestJson = null;
         try {
             JsonElement requestParsed = gson.fromJson(request.getReader(), JsonElement.class);
-            JsonObject requestJson = null;
 
             if (requestParsed != null && requestParsed.isJsonObject()) {
                 requestJson = requestParsed.getAsJsonObject();
@@ -39,9 +40,14 @@ public class MainFunction implements HttpFunction {
 
         } catch (JsonParseException e) {
             logger.severe("Error parsing JSON: " + e.getMessage());
+
+        }
+        if (requestJson == null) {
+            response.setStatusCode(HttpURLConnection.HTTP_BAD_REQUEST);
+            return;
         }
 
         BufferedWriter writer = response.getWriter();
-        writer.write("Hello World " + name);
+        writer.write("Successfully Hired");
     }
 }
