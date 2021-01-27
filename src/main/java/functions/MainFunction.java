@@ -11,8 +11,6 @@ import com.google.gson.JsonObject;
 
 import java.io.BufferedWriter;
 import java.net.HttpURLConnection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
 
@@ -23,6 +21,7 @@ public class MainFunction implements HttpFunction {
 
     @Override
     public void service(HttpRequest request, HttpResponse response) throws Exception {
+        logger.info("Request received to update hire");
         String name;
         Integer age;
         String place;
@@ -41,7 +40,9 @@ public class MainFunction implements HttpFunction {
                 age = requestJson.get("age").getAsInt();
                 place = requestJson.get("place").getAsString();
                 phone = requestJson.get("phone").getAsString();
+                logger.info("values parsed from JSON input");
             } else {
+                logger.info("invalid input");
                 response.setStatusCode(HttpURLConnection.HTTP_BAD_REQUEST);
                 return;
             }
