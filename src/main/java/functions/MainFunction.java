@@ -55,7 +55,7 @@ public class MainFunction implements HttpFunction {
                 response.setStatusCode(HttpURLConnection.HTTP_BAD_REQUEST);
                 return;
             }
-            User user = new User(name, age, place, phone);
+            User user = new User(name, age, place);
             store(user);
             publish(user);
         } catch (Exception e) {
